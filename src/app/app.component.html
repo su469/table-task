@@ -1,0 +1,76 @@
+<h1>Student Data</h1>
+<hr>
+<h1 class="title">Students Info
+  <select (change)="filterall($event)" [(ngModel)]="pricetype" >
+    <option>All</option>
+    <option>A-Z</option>
+    <option>Z-A</option>
+  
+</select>
+<div class="serach">
+  <input type="text" class="size" name="search" placeholder="search" [(ngModel)]="searchText">
+</div>
+
+
+<table id="users">
+
+  <tr>
+    <th *ngFor="let col of columns">
+      {{col}}
+    </th>
+  </tr>
+  <tr *ngFor="let user of users|sort:pricetype | paginate: { itemsPerPage: 5, currentPage: p }  | filter:searchText ;let i=index ">
+    <td>{{i+1}}</td>
+    <td>{{user.name}}</td>
+    <td>{{user.email}}</td>
+    <td>{{user.city}}</td>
+    <td>
+      <button class="btn btn-success" (click)="popBox(user.id)" >View</button>&nbsp;
+      <button class="btn btn-danger" (click)=" deleteUsers(user.id)"  >Delete</button>
+      
+    </td>
+
+
+
+  </tr>
+
+</table>
+
+<pagination-controls (pageChange)="p = $event">
+
+</pagination-controls>
+<div class="box"  *ngIf="isBooleanValue">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Student Data</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="close()"></button>
+      </div>
+      <div class="modal-body">
+        <table>
+          <tr>
+            <th>Id:</th>
+            <td>{{eachUser.id}}</td>
+          </tr>
+          <tr>
+            <th>Name:</th>
+            <td>{{eachUser.name}}</td>
+          </tr>
+          <tr>
+            <th>Email:</th>
+            <td>{{eachUser.email}}</td>
+          </tr>
+          
+          <tr>
+            <th>City:</th>
+            <td>{{eachUser.city}}</td>
+          </tr>
+          
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="button" data-bs-dismiss="modal" (click)="close()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
